@@ -1,5 +1,6 @@
 package com.ozgur.PortPriceTracker.dto;
 
+import com.ozgur.PortPriceTracker.entities.Container;
 import com.ozgur.PortPriceTracker.entities.Port;
 import jakarta.persistence.Column;
 import lombok.*;
@@ -16,10 +17,20 @@ public class PriceDTO {
     private Date priceValidityDate;
     private Date createdDate;
 
+    private Container containerType;
+
+    public Container getContainerType() {
+        return containerType;
+    }
+
+    public void setContainerType(Container containerType) {
+        this.containerType = containerType;
+    }
+
     public PriceDTO() {
     }
 
-    public PriceDTO(long id, PortDTO portOfDischarge, PortDTO portOfLoading, CarrierDTO carrier, float freightPrice, float localPrice, Date priceValidityDate, Date createdDate) {
+    public PriceDTO(long id, PortDTO portOfDischarge, PortDTO portOfLoading, CarrierDTO carrier, float freightPrice, float localPrice, Date priceValidityDate, Date createdDate, Container containerType) {
         this.id = id;
         this.portOfDischarge = portOfDischarge;
         this.portOfLoading = portOfLoading;
@@ -28,6 +39,7 @@ public class PriceDTO {
         this.localPrice = localPrice;
         this.priceValidityDate = priceValidityDate;
         this.createdDate = createdDate;
+        this.containerType = containerType;
     }
 
     public long getId() {
@@ -93,4 +105,5 @@ public class PriceDTO {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
 }

@@ -2,7 +2,6 @@ package com.ozgur.PortPriceTracker.controller;
 
 import com.ozgur.PortPriceTracker.dto.CityDTO;
 import com.ozgur.PortPriceTracker.dto.CountryDTO;
-import com.ozgur.PortPriceTracker.service.CityService;
 import com.ozgur.PortPriceTracker.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +40,10 @@ public class CountryController {
     public ResponseEntity<String> deleteCountry(@PathVariable Long id){
         countryService.delete(id);
         return ResponseEntity.ok(id+" :ID is deleted successfully !");
+    }
+
+    @GetMapping("/{id}/cities")
+    public ResponseEntity<List<CityDTO>> findCitiesById(@PathVariable Long id){
+        return  ResponseEntity.ok(countryService.findCitiesById(id));
     }
 }

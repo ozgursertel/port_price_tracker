@@ -1,7 +1,9 @@
 package com.ozgur.PortPriceTracker.service;
 
+import com.ozgur.PortPriceTracker.dto.CityDTO;
 import com.ozgur.PortPriceTracker.dto.CountryDTO;
 import com.ozgur.PortPriceTracker.entities.Country;
+import com.ozgur.PortPriceTracker.mapper.CityMapper;
 import com.ozgur.PortPriceTracker.mapper.CountryMapper;
 import com.ozgur.PortPriceTracker.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,10 @@ public class CountryService {
 
     public void delete(Long id){
         countryRepository.delete(countryRepository.findById(id).orElseThrow(() -> new RuntimeException(id + " :ID Country did not Found")));
+    }
+
+    public List<CityDTO> findCitiesById(Long id) {
+        Country e = countryRepository.findById(id).orElseThrow(()->new RuntimeException(id + ":ID is not found in Countries"));
+        return CityMapper.INSTANCE.toDtoList(e.getCityList());
     }
 }

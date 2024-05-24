@@ -31,6 +31,9 @@ public class Price {
     private Date priceValidityDate;
     @Column(name = "created_date")
     private Date createdDate;
+    @ManyToOne
+    @JoinColumn(name = "container_type_id",referencedColumnName = "id")
+    private Container containerType;
     public Price(long id, Port portOfDischarge, Port portOfLoading, Carrier carrier, float freightPrice, float localPrice, Date priceValidityDate, Date createdDate) {
         this.id = id;
         this.portOfDischarge = portOfDischarge;
@@ -90,5 +93,13 @@ public class Price {
     }
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Container getContainerType() {
+        return containerType;
+    }
+
+    public void setContainerType(Container containerType) {
+        this.containerType = containerType;
     }
 }

@@ -20,7 +20,7 @@ public class CarrierController {
         return ResponseEntity.ok(carrierService.getAll());
     }
     //Get by id
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     private ResponseEntity<CarrierDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok(carrierService.findById(id));
     }
@@ -30,12 +30,12 @@ public class CarrierController {
         return ResponseEntity.ok(carrierService.addCarrier(dto));
     }
     //Update Carrier
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     private ResponseEntity<CarrierDTO> updateById(@PathVariable Long id,@RequestBody CarrierDTO dto){
         return ResponseEntity.ok(carrierService.updateById(dto,id));
     }
     //Delete Carrier
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     private ResponseEntity<String> deleteById(@PathVariable Long id){
         carrierService.deleteById(id);
         String str = id+":ID Deleted Succesfully" ;
