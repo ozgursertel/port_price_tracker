@@ -5,6 +5,7 @@ import com.ozgur.PortPriceTracker.dto.CountryDTO;
 import com.ozgur.PortPriceTracker.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +32,14 @@ public class CountryController {
     }
     //Add Port
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CountryDTO> addCountry(@RequestBody CountryDTO dto){
         return ResponseEntity.ok(countryService.save(dto));
     }
 
     //Delete Port
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteCountry(@PathVariable Long id){
         countryService.delete(id);
         return ResponseEntity.ok(id+" :ID is deleted successfully !");

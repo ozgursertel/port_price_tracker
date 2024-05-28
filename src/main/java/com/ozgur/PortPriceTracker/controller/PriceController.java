@@ -3,9 +3,12 @@ package com.ozgur.PortPriceTracker.controller;
 import com.ozgur.PortPriceTracker.dto.PriceDTO;
 import com.ozgur.PortPriceTracker.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +26,16 @@ public class PriceController {
     @GetMapping("/ports")
     public ResponseEntity<List<PriceDTO>> getPricesFromSelectedPorts(@RequestParam Long podID,@RequestParam Long polID){
         return ResponseEntity.ok(priceService.getPricesFromSelectedPorts(podID,polID));
+    }
+    @GetMapping("/date")
+    public ResponseEntity<List<PriceDTO>> getPricesFromSelectedPortsAndDates(
+            @RequestParam Long podID,
+            @RequestParam Long polID,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date lDate
+    ){
+
+        return ResponseEntity.ok(priceService.getPricesFromSelectedPortsAndDates(podID,polID,fDate,lDate));
     }
     //Get Prices From Selected Carrier
     @GetMapping("/carrier/{id}")

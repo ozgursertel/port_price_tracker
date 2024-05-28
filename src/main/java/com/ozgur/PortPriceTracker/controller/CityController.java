@@ -4,6 +4,7 @@ import com.ozgur.PortPriceTracker.dto.CityDTO;
 import com.ozgur.PortPriceTracker.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +31,14 @@ public class CityController {
     }
     //Add Port
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CityDTO> addCity(@RequestBody CityDTO dto){
         return ResponseEntity.ok(cityService.save(dto));
     }
 
     //Delete Port
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deletePort(@PathVariable Long id){
         cityService.delete(id);
         return ResponseEntity.ok(id+" :ID is deleted successfully !");

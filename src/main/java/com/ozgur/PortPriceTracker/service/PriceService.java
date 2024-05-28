@@ -14,11 +14,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PriceService {
@@ -35,7 +35,7 @@ public class PriceService {
     }
 
     public List<PriceDTO> getPricesFromSelectedPorts(Long podId,Long polId){
-        return PriceMapper.INSTANCE.toDtoList(priceRepository.findByPortOfLoadingAndPortOfDischarge(polId,podId));
+        return PriceMapper.INSTANCE.toDtoList(priceRepository.findByPortOfLoadingAndPortOfDischargeAndValidityDateBefore(polId,podId));
     }
 
     public List<PriceDTO> getPriceFromCarrier(Long cId) {
@@ -82,5 +82,10 @@ public class PriceService {
         Price savedPrice = priceRepository.save(price);
 
         return PriceMapper.INSTANCE.toDto(savedPrice);
+    }
+
+    public List<PriceDTO> getPricesFromSelectedPortsAndDates(Long podID, Long polID, Date fDate, Date lDate) {
+        List<Price> ps = priceRepository.getPricesFromSelectedPortsAndDates(podID,polID,fDate,lDate);
+        return PriceMapper.INSTANCE.toDtoList(ps);
     }
 }

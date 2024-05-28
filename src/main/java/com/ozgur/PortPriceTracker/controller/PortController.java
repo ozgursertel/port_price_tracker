@@ -4,6 +4,7 @@ import com.ozgur.PortPriceTracker.dto.PortDTO;
 import com.ozgur.PortPriceTracker.service.PortService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +31,14 @@ public class PortController {
     }
     //Add Port
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<PortDTO> addPort(@RequestBody PortDTO dto){
         return ResponseEntity.ok(portService.save(dto));
     }
 
     //Delete Port
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deletePort(@PathVariable Long id){
         portService.delete(id);
         return ResponseEntity.ok(id+" :ID is deleted successfully !");
